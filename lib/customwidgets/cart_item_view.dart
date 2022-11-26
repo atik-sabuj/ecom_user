@@ -31,7 +31,9 @@ class CartItemView extends StatelessWidget {
             title: Text(cartModel.productName),
             subtitle: Text('Unit Price: $currencySymbol${cartModel.salePrice}'),
             trailing: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                provider.removeFromCart(cartModel.productId!);
+              },
               icon: const Icon(Icons.delete),
             ),
           ),

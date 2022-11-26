@@ -24,7 +24,7 @@ class AuthService {
   }
 
   static Future<void> forgotPassword() {
-    return _auth.sendPasswordResetEmail(email: 'tanvir.ahmad@gmail.com');
+    return _auth.sendPasswordResetEmail(email: 'sabuj235@gmail.com');
   }
 
   static Future<UserCredential> signInWithGoogle() async {
