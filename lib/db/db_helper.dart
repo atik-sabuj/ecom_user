@@ -19,7 +19,7 @@ class DbHelper {
   }
 
   static Future<QuerySnapshot<Map<String, dynamic>>> getRatingsByProduct(
-          String pid) =>
+      String pid) =>
       _db
           .collection(collectionProduct)
           .doc(pid)
@@ -27,11 +27,11 @@ class DbHelper {
           .get();
 
   static Stream<DocumentSnapshot<Map<String, dynamic>>> getUserInfo(
-          String uid) =>
+      String uid) =>
       _db.collection(collectionUser).doc(uid).snapshots();
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCartItems(
-          String uid) =>
+      String uid) =>
       _db
           .collection(collectionUser)
           .doc(uid)
@@ -44,7 +44,7 @@ class DbHelper {
           .doc(documentOrderConstant)
           .snapshots();
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllOrdersByUser(
-          String uid) =>
+      String uid) =>
       _db
           .collection(collectionOrder)
           .where(orderFieldUserId, isEqualTo: uid)
@@ -56,12 +56,15 @@ class DbHelper {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllProducts() =>
       _db.collection(collectionProduct).snapshots();
 
+  static Future<DocumentSnapshot<Map<String, dynamic>>> getProductById(String id) =>
+      _db.collection(collectionProduct).doc(id).get();
+
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllProductsByCategory(
-          CategoryModel categoryModel) =>
+      CategoryModel categoryModel) =>
       _db
           .collection(collectionProduct)
           .where('$productFieldCategory.$categoryFieldId',
-              isEqualTo: categoryModel.categoryId)
+          isEqualTo: categoryModel.categoryId)
           .snapshots();
 
   static Future<void> addUser(UserModel userModel) {
@@ -150,15 +153,15 @@ class DbHelper {
           .get();
       final prevProductStock = productSnapshot.data()![productFieldStock];
       final prevCategoryProductCount =
-          categorySnapshot.data()![categoryFieldProductCount];
+      categorySnapshot.data()![categoryFieldProductCount];
       final proDoc = _db.collection(collectionProduct).doc(cartModel.productId);
       final catDoc =
-          _db.collection(collectionCategory).doc(cartModel.categoryId);
+      _db.collection(collectionCategory).doc(cartModel.categoryId);
       wb.update(
           proDoc, {productFieldStock: (prevProductStock - cartModel.quantity)});
       wb.update(catDoc, {
         categoryFieldProductCount:
-            (prevCategoryProductCount - cartModel.quantity)
+        (prevCategoryProductCount - cartModel.quantity)
       });
     }
     return wb.commit();

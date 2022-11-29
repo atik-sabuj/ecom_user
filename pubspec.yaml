@@ -40,6 +40,9 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   firebase_storage:
+  firebase_messaging:
+  firebase_analytics:
+  flutter_local_notifications:
   provider:
   intl:
   image_picker:

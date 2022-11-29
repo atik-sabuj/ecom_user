@@ -14,10 +14,17 @@ class ProductProvider extends ChangeNotifier {
   List<CategoryModel> categoryList = [];
   List<ProductModel> productList = [];
 
+  Future<ProductModel> getProductById(String id) async {
+    final snapshot = await DbHelper.getProductById(id);
+    return ProductModel.fromMap(snapshot.data()!);
+  }
+
+
+
   getAllCategories() {
     DbHelper.getAllCategories().listen((snapshot) {
       categoryList = List.generate(snapshot.docs.length,
-          (index) => CategoryModel.fromMap(snapshot.docs[index].data()));
+              (index) => CategoryModel.fromMap(snapshot.docs[index].data()));
       categoryList
           .sort((cat1, cat2) => cat1.categoryName.compareTo(cat2.categoryName));
       notifyListeners();
@@ -31,7 +38,7 @@ class ProductProvider extends ChangeNotifier {
   getAllProducts() {
     DbHelper.getAllProducts().listen((snapshot) {
       productList = List.generate(snapshot.docs.length,
-          (index) => ProductModel.fromMap(snapshot.docs[index].data()));
+              (index) => ProductModel.fromMap(snapshot.docs[index].data()));
       notifyListeners();
     });
   }
@@ -39,7 +46,7 @@ class ProductProvider extends ChangeNotifier {
   getAllProductsByCategory(CategoryModel categoryModel) {
     DbHelper.getAllProductsByCategory(categoryModel).listen((snapshot) {
       productList = List.generate(snapshot.docs.length,
-          (index) => ProductModel.fromMap(snapshot.docs[index].data()));
+              (index) => ProductModel.fromMap(snapshot.docs[index].data()));
       notifyListeners();
     });
   }
@@ -67,7 +74,7 @@ class ProductProvider extends ChangeNotifier {
     await DbHelper.addRating(ratingModel);
     final snapshot = await DbHelper.getRatingsByProduct(productId);
     final ratingList = List.generate(snapshot.docs.length,
-        (index) => RatingModel.fromMap(snapshot.docs[index].data()));
+            (index) => RatingModel.fromMap(snapshot.docs[index].data()));
     double totalRatings = 0.0;
     for (var model in ratingList) {
       totalRatings += model.rating;
@@ -84,6 +91,6 @@ class ProductProvider extends ChangeNotifier {
   Future<List<CommentModel>> getAllCommentsByProduct(String s) async {
     final snapshot = await DbHelper.getAllCommentsByProduct(s);
     return List.generate(snapshot.docs.length,
-        (index) => CommentModel.fromMap(snapshot.docs[index].data()));
+            (index) => CommentModel.fromMap(snapshot.docs[index].data()));
   }
 }

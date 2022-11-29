@@ -53,7 +53,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             height: 200,
             imageUrl: displayUrl,
             placeholder: (context, url) =>
-                const Center(child: CircularProgressIndicator()),
+            const Center(child: CircularProgressIndicator()),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
           Padding(
@@ -72,9 +72,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       height: 60,
                       imageUrl: productModel.thumbnailImageUrl,
                       placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
+                      const Center(child: CircularProgressIndicator()),
                       errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -94,9 +94,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         height: 60,
                         imageUrl: url,
                         placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator()),
+                        const Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                        const Icon(Icons.error),
                       ),
                     ),
                   );
@@ -119,7 +119,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   child: Consumer<CartProvider>(
                     builder: (context, provider, child) {
                       final isInCart =
-                          provider.isProductInCart(productModel.productId!);
+                      provider.isProductInCart(productModel.productId!);
                       return OutlinedButton.icon(
                         onPressed: () {
                           if (isInCart) {
@@ -132,7 +132,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             ? Icons.remove_shopping_cart
                             : Icons.shopping_cart),
                         label:
-                            Text(isInCart ? 'REMOVE FROM CART' : 'ADD TO CART'),
+                        Text(isInCart ? 'REMOVE FROM CART' : 'ADD TO CART'),
                       );
                     },
                   ),
@@ -220,7 +220,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       EasyLoading.show(status: 'Please wait');
                       final commentModel = CommentModel(
                         commentId:
-                            DateTime.now().millisecondsSinceEpoch.toString(),
+                        DateTime.now().millisecondsSinceEpoch.toString(),
                         userModel: context.read<UserProvider>().userModel!,
                         productId: productModel.productId!,
                         comment: txtController.text,
@@ -235,11 +235,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         id: DateTime.now().millisecondsSinceEpoch.toString(),
                         type: NotificationType.comment,
                         message:
-                            'Product ${productModel.productName} has a new comment which is waiting for your approval',
+                        'Product ${productModel.productName} has a new comment which is waiting for your approval',
                         commentModel: commentModel,
                       );
                       await Provider.of<NotificationProvider>(context,
-                              listen: false)
+                          listen: false)
                           .addNotification(notificationModel);
                       EasyLoading.dismiss();
                       focusNode.unfocus();
@@ -270,21 +270,21 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     child: Column(
                       children: commentList
                           .map((comment) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ListTile(
-                                    leading: const Icon(Icons.person),
-                                    title: Text(comment.userModel.displayName ??
-                                        comment.userModel.email),
-                                    subtitle: Text(comment.date),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16, horizontal: 8),
-                                    child: Text(comment.comment),
-                                  ),
-                                ],
-                              ))
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListTile(
+                            leading: const Icon(Icons.person),
+                            title: Text(comment.userModel.displayName ??
+                                comment.userModel.email),
+                            subtitle: Text(comment.date),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 8),
+                            child: Text(comment.comment),
+                          ),
+                        ],
+                      ))
                           .toList(),
                     ),
                   );
